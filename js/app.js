@@ -11,9 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validar(e) {
     if (e.target.value.trim() === "") {
-      console.log("Esta vacio");
+      mostrarAlerta();
     } else {
       console.log("Hay algo");
     }
+  }
+
+  function mostrarAlerta() {
+    // Generar alerta
+    const error = document.createElement("p");
+    error.textContent = "Todos los campos son obligatorios";
   }
 });
