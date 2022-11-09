@@ -12,21 +12,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validar(e) {
     if (e.target.value.trim() === "") {
-      mostrarAlerta(`El campo ${e.target.id} es obligatorio`);
+      mostrarAlerta(`El campo ${e.target.id} es obligatorio`, e.target.parentElement);
     } else {
       console.log("Hay algo");
     }
   }
 
-  function mostrarAlerta(mensaje) {
+  function mostrarAlerta(mensaje, referencia) {
     // Generar alerta
-    const alerta = document.querySelector(".error");
+    const alerta = referencia.querySelector(".error");
 
     if (!alerta) {
       const error = document.createElement("p");
       error.textContent = mensaje;
       error.classList.add("error", "bg-red-400", "text-white", "p-2", "text-center");
-      formulario.appendChild(error);
+      referencia.appendChild(error);
+
+      setTimeout(() => {
+        error.remove();
+      }, 3000)
     }
   }
 });
