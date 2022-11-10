@@ -20,26 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
   entradaMensaje.addEventListener("input", validar);
   formulario.addEventListener("submit", enviarEmail);
 
-  btnReset.addEventListener("click", function(e) {
+  btnReset.addEventListener("click", function (e) {
     e.preventDefault();
-    const resetear = confirm("Desea resetear el formulario?")
+    const resetear = confirm("Desea resetear el formulario?");
     if (resetear) {
-      // Reiniciar el objeto
-      correo.email = "";
-      correo.asunto = "";
-      correo.mensaje = "";
-
-      // Resetear el formulario
-      formulario.reset();
-
-      comprobarEmail();
+      resetFormulario();
     }
   });
 
   function enviarEmail(e) {
     e.preventDefault();
 
-    console.log("Enviando...");
+    spinner.classList.add("flex");
+    spinner.classList.remove("hidden");
+    setTimeout(() => {
+      spinner.classList.add("hidden");
+      spinner.classList.remove("flex");
+
+      resetFormulario();
+    }, 3000);
   }
 
   function validar(e) {
@@ -107,5 +106,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     btnSubmit.classList.remove("opacity-50");
     btnSubmit.disabled = false;
+  }
+
+  function resetFormulario() {
+    // Reiniciar el objeto
+    correo.email = "";
+    correo.asunto = "";
+    correo.mensaje = "";
+
+    // Resetear el formulario
+    formulario.reset();
+
+    comprobarEmail();
   }
 });
