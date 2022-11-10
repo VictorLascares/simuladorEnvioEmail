@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const correo = {
     email: "",
+    cc: "",
     asunto: "",
     mensaje: "",
   };
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Seleccionar los elementos de la interfaz
   const formulario = document.querySelector("#formulario");
   const entradaCorreo = document.querySelector("#email");
+  const entradaCC = document.querySelector("#cc");
   const entradaAsunto = document.querySelector("#asunto");
   const entradaMensaje = document.querySelector("#mensaje");
   const btnSubmit = document.querySelector("#botones button[type='submit']");
@@ -16,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Asignar eventos
   entradaCorreo.addEventListener("input", validar);
+  entradaCC.addEventListener("input", validar);
   entradaAsunto.addEventListener("input", validar);
   entradaMensaje.addEventListener("input", validar);
   formulario.addEventListener("submit", enviarEmail);
@@ -49,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function validar(e) {
-    if (e.target.value.trim() === "") {
+    if (e.target.value.trim() === "" && e.target.id !== "cc") {
       mostrarAlerta(
         `El campo ${e.target.id} es obligatorio`,
         e.target.parentElement,
@@ -62,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     limpiarAlerta(e.target.parentElement);
 
-    if (e.target.id === "email" && !validarEmail(e.target.value)) {
+    if ((e.target.id === "email" || e.target.id === "cc") && !validarEmail(e.target.value)) {
       mostrarAlerta("Correo no válido", e.target.parentElement, "error");
       correo[e.target.name] = "";
       comprobarEmail();
@@ -122,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function comprobarEmail() {
-    if (Object.values(correo).includes("")) {
+    if (!correo.email || !correo.asunto || !correo.mensaje) {
       btnSubmit.classList.add("opacity-50");
       btnSubmit.disabled = true;
       return;
@@ -134,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetFormulario() {
     // Reiniciar el objeto
     correo.email = "";
+    correo.cc = "";
     correo.asunto = "";
     correo.mensaje = "";
 
