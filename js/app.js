@@ -38,6 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
       spinner.classList.remove("flex");
 
       resetFormulario();
+
+      // Crear una alerta
+      mostrarAlerta(
+        "El mensaje fue enviado correctamente",
+        formulario,
+        "exito"
+      );
     }, 3000);
   }
 
@@ -45,7 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.value.trim() === "") {
       mostrarAlerta(
         `El campo ${e.target.id} es obligatorio`,
-        e.target.parentElement
+        e.target.parentElement,
+        "error"
       );
       correo[e.target.name] = "";
       comprobarEmail();
@@ -55,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     limpiarAlerta(e.target.parentElement);
 
     if (e.target.id === "email" && !validarEmail(e.target.value)) {
-      mostrarAlerta("Correo no válido", e.target.parentElement);
+      mostrarAlerta("Correo no válido", e.target.parentElement, "error");
       correo[e.target.name] = "";
       comprobarEmail();
     }
@@ -67,21 +75,36 @@ document.addEventListener("DOMContentLoaded", () => {
     comprobarEmail();
   }
 
-  function mostrarAlerta(mensaje, referencia) {
+  function mostrarAlerta(mensaje, referencia, tipo) {
     // Generar alerta
-    const alerta = referencia.querySelector(".error");
 
-    if (!alerta) {
-      const error = document.createElement("p");
-      error.textContent = mensaje;
-      error.classList.add(
+    const alerta = document.createElement("p");
+    if (tipo === "error" && !referencia.querySelector(".error")) {
+      alerta.textContent = mensaje;
+      alerta.classList.add(
         "error",
         "bg-red-400",
         "text-white",
         "p-2",
         "text-center"
       );
-      referencia.appendChild(error);
+      referencia.appendChild(alerta);
+    } else if (tipo === "exito" && !referencia.querySelector(".exito")) {
+      alerta.classList.add(
+        "exito",
+        "bg-green-400",
+        "text-white",
+        "p-2",
+        "text-center",
+        "mt-10"
+      );
+
+      alerta.textContent = mensaje;
+      referencia.appendChild(alerta);
+
+      setTimeout(() => {
+        alerta.remove();
+      }, 3000);
     }
   }
 
