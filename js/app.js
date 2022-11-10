@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       return;
     }
+
     limpiarAlerta(e.target.parentElement);
+
+    if (e.target.id === "email" && !validarEmail(e.target.value)) {
+      mostrarAlerta("Correo no válido", e.target.parentElement);
+    }
   }
 
   function mostrarAlerta(mensaje, referencia) {
@@ -44,5 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (alerta) {
       alerta.remove();
     }
+  }
+
+  function validarEmail(email) {
+    const regex = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const resultado = regex.test(email);
+    return resultado;
   }
 });
