@@ -11,11 +11,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const entradaAsunto = document.querySelector("#asunto");
   const entradaMensaje = document.querySelector("#mensaje");
   const btnSubmit = document.querySelector("#botones button[type='submit']");
+  const btnReset = document.querySelector("#botones button[type='reset']");
 
   // Asignar eventos
   entradaCorreo.addEventListener("input", validar);
   entradaAsunto.addEventListener("input", validar);
   entradaMensaje.addEventListener("input", validar);
+
+  btnReset.addEventListener("click", function(e) {
+    e.preventDefault();
+    const resetear = confirm("Desea resetear el formulario?")
+    if (resetear) {
+      // Reiniciar el objeto
+      correo.email = "";
+      correo.asunto = "";
+      correo.mensaje = "";
+
+      // Resetear el formulario
+      formulario.reset();
+
+      comprobarEmail();
+    }
+  });
 
   function validar(e) {
     if (e.target.value.trim() === "") {
