@@ -12,11 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const entradaMensaje = document.querySelector("#mensaje");
   const btnSubmit = document.querySelector("#botones button[type='submit']");
   const btnReset = document.querySelector("#botones button[type='reset']");
+  const spinner = document.querySelector("#spinner");
 
   // Asignar eventos
   entradaCorreo.addEventListener("input", validar);
   entradaAsunto.addEventListener("input", validar);
   entradaMensaje.addEventListener("input", validar);
+  formulario.addEventListener("submit", enviarEmail);
 
   btnReset.addEventListener("click", function(e) {
     e.preventDefault();
@@ -33,6 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
       comprobarEmail();
     }
   });
+
+  function enviarEmail(e) {
+    e.preventDefault();
+
+    console.log("Enviando...");
+  }
 
   function validar(e) {
     if (e.target.value.trim() === "") {
